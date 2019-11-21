@@ -33,11 +33,14 @@ class Train(object):
             self.current_platform = None
 
         elif event == 'stopping':
-            self.state = self.state.on_event(event)
-            self.current_station = self.moving_to
-            self.current_platform = self.track.available_platform(self.moving_to)
-            self.moving_to = None
-            self.current_platform.on_event('train_on_platform')
+            if self.track.available_platform(self.moving_to):
+                self.state = self.state.on_event(event)
+                self.current_station = self.moving_to
+                self.current_platform = self.track.available_platform(self.moving_to)
+                self.moving_to = None
+                self.current_platform.on_event('train_on_platform')
+            else:
+                self.state = self.state.on_event('platform_occupied')
         else:
             self.state = self.state.on_event(event)
 
