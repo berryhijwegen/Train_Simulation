@@ -2,8 +2,7 @@ from platform_states import EmptyState
 
 class Platform(object):
     """ 
-    A simple state machine that mimics the functionality of a device from a 
-    high level.
+    A Platform is part of a station. A Station can have multiple Platforms. A Platform can have one Station. On every platform there can be one Train.
     """
 
     def __init__(self, num):

@@ -2,15 +2,15 @@ from train_states import StationaryState
 
 class Train(object):
     """ 
-    A simple state machine that mimics the functionality of a device from a 
-    high level.
+    Train Class is responsible for starting and stopping itself. It keeps track on its state, its current station and the platform it's on.
     """
 
-    def __init__(self, track, station):
-        """ Initialize the components. """
+    def __init__(self, num, track, station):
+        """ Initialize the Train. """
 
         # Start with a default state.
         self.track = track
+        self.num = num
         self.state = StationaryState()
         self.current_station = station
         self.current_platform = self.track.available_platform(self.current_station)
@@ -25,7 +25,6 @@ class Train(object):
         then assigned as the new state.
         """
 
-        # The next state will be the result of the on_event function.
         if event == 'starting':
             self.state = self.state.on_event(event)
             self.moving_to = station

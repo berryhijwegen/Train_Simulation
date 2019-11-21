@@ -3,31 +3,41 @@ from platform_states import EmptyState, OccupiedState
 
 class Track(object):
     """ 
-    A simple state machine that mimics the functionality of a device from a 
-    high level.
+    Class Track keeps track of all trains and stations on the particular track.
     """
 
     def __init__(self):
-        """ Initialize the components. """
+        """ Initialize the Track. """
         # Start with a default state.
         self.trains = []
         self.stations = []
-        self.timestamp = datetime(2020, 1, 1, 6, 0, 0)
     
     def add_train(self, train):
-        self.trains.append(train)
+        """
+        Add one (or multiple) train(s) to the track.
+        """
+        if type(train) == list:
+            for t in train:
+                self.trains.append(t)
+        else:
+            self.trains.append(train)
 
     def add_station(self, station):
+        """
+        Add one (or multiple) station(s) to the track.
+        """
         if type(station) == list:
             for s in station:
                 self.stations.append(s)
         else:
             self.stations.append(s)
 
-    def alter_time_by_minutes(self, minutes):
-        self.timestamp += time(0, minutes, 0)
-        
     def available_platform(self, station):
+        """
+        Check if there is an platform available for the given station. 
+        If so, return the platform. 
+        Else return False, False value need to be handled where called.
+        """
         for platform in station.platforms:
             if isinstance(platform.state, EmptyState):
                 platform.state == OccupiedState()
@@ -36,5 +46,8 @@ class Track(object):
         return False
 
     def platform_on_event(self, station, platform_num, event):
+        """
+        Trigger an given event on the given station on platform with the given number.
+        """
         platform = station.get_platform_by_num(platform_num)
         platform.state = platform.on_event(event)

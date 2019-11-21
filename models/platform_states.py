@@ -1,9 +1,10 @@
 from state import State
 
-# Start of our states
+# States for Platform.py
+
 class EmptyState(State):
     """
-    The state which indicates that there are limited device capabilities.
+    The state which indicates that there is no train on the platform.
     """
 
     def on_event(self, event):
@@ -15,8 +16,7 @@ class EmptyState(State):
 
 class OccupiedState(State):
     """
-    The state which indicates that there are no limitations on device
-    capabilities.
+    The state which indicates that there is a train on the platform.
     """
 
     def on_event(self, event):
